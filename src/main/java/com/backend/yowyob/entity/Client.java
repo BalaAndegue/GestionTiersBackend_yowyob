@@ -1,8 +1,10 @@
 package com.backend.yowyob.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -10,6 +12,8 @@ import java.math.BigDecimal;
 @Table(name = "clients")
 @Data
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor 
+@AllArgsConstructor
 public class Client extends Tiers {
     
     @Enumerated(EnumType.STRING)

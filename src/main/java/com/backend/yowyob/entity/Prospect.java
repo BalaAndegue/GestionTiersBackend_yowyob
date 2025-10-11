@@ -1,8 +1,10 @@
 package com.backend.yowyob.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -10,6 +12,8 @@ import java.time.LocalDate;
 @Table(name = "prospects")
 @Data
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor 
+@AllArgsConstructor
 public class Prospect extends Tiers {
     
     @Enumerated(EnumType.STRING)

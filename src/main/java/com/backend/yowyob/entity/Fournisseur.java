@@ -1,13 +1,17 @@
 package com.backend.yowyob.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "fournisseurs")
 @Data
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor 
+@AllArgsConstructor
 public class Fournisseur extends Tiers {
     
     @Enumerated(EnumType.STRING)

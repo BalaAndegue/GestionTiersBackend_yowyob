@@ -1,7 +1,10 @@
 package com.backend.yowyob.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +15,8 @@ import java.time.LocalDateTime;
 @Table(name = "tiers")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
+@NoArgsConstructor 
+@AllArgsConstructor
 public class Tiers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

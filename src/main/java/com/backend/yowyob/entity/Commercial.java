@@ -1,8 +1,10 @@
 package com.backend.yowyob.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,6 +13,8 @@ import java.time.LocalDate;
 @Table(name = "commerciaux")
 @Data
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor 
+@AllArgsConstructor
 public class Commercial extends Tiers {
     
     @Enumerated(EnumType.STRING)
