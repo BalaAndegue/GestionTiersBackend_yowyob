@@ -11,11 +11,14 @@ import lombok.EqualsAndHashCode;
 public class Fournisseur extends Tiers {
     
     @Enumerated(EnumType.STRING)
+    @Column(name = "mode_paiement")
     private ModePaiement modePaiement;
     
+    @Column(name = "delai_livraison")
     private String delaiLivraison;
     
     @Enumerated(EnumType.STRING)
+    @Column(name = "produits_principaux")
     private ProduitPrincipal produitsPrincipaux;
     
     private String certification;

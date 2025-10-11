@@ -1,7 +1,5 @@
 package com.backend.yowyob.entity;
 
-
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,14 +14,19 @@ import java.time.LocalDate;
 public class Commercial extends Tiers {
     
     @Enumerated(EnumType.STRING)
+    @Column(name = "type_commercial")
     private TypeCommercial typeCommercial;
     
     private BigDecimal commission;
     
+    @Column(name = "date_debut_contrat")
     private LocalDate dateDebutContrat;
+    
+    @Column(name = "date_fin_contrat")
     private LocalDate dateFinContrat;
     
     @Enumerated(EnumType.STRING)
+    @Column(name = "zones_couvertes")
     private ZoneCouverture zonesCouvertes;
     
     @Enumerated(EnumType.STRING)

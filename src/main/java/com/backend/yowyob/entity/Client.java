@@ -13,11 +13,14 @@ import java.math.BigDecimal;
 public class Client extends Tiers {
     
     @Enumerated(EnumType.STRING)
+    @Column(name = "segment")
     private SegmentClient segment;
     
+    @Column(name = "plafond_credit")
     private BigDecimal plafondCredit;
     
     @Enumerated(EnumType.STRING)
+    @Column(name = "canal_aquisition")
     private CanalAquisition canalAquisition;
     
     public enum SegmentClient {

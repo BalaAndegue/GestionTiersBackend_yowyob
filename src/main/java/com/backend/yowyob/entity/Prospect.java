@@ -1,6 +1,5 @@
 package com.backend.yowyob.entity;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,15 +13,18 @@ import java.time.LocalDate;
 public class Prospect extends Tiers {
     
     @Enumerated(EnumType.STRING)
+    @Column(name = "source_prospect")
     private SourceProspect sourceProspect;
     
     @Enumerated(EnumType.STRING)
     private Potentiel potentiel;
     
+    @Column(name = "date_conversion")
     private LocalDate dateConversion;
+    
     private Integer probabilite;
     
-    @Column(length = 2000)
+    @Column(name = "notes_prospect", length = 2000)
     private String notesProspect;
     
     public enum SourceProspect {
