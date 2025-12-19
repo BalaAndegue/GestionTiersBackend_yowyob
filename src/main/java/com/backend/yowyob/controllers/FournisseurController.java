@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/fournisseurs")
@@ -33,19 +34,19 @@ public class FournisseurController {
 
     @Operation(summary = "Récupérer un fournisseur par ID")
     @GetMapping("/{id}")
-    public ResponseEntity<FournisseurDTO> getFournisseurById(@PathVariable Long id) {
+    public ResponseEntity<FournisseurDTO> getFournisseurById(@PathVariable UUID id) {
         return ResponseEntity.ok(tiersService.findFournisseurById(id));
     }
 
     @Operation(summary = "Mettre à jour un fournisseur")
     @PutMapping("/{id}")
-    public ResponseEntity<FournisseurDTO> updateFournisseur(@PathVariable Long id, @RequestBody FournisseurDTO fournisseurDTO) {
+    public ResponseEntity<FournisseurDTO> updateFournisseur(@PathVariable UUID id, @RequestBody FournisseurDTO fournisseurDTO) {
         return ResponseEntity.ok(tiersService.updateFournisseur(id, fournisseurDTO));
     }
 
     @Operation(summary = "Supprimer un fournisseur")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFournisseur(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteFournisseur(@PathVariable UUID id) {
         tiersService.deleteTiers(id);
         return ResponseEntity.ok().build();
     }

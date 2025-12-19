@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,14 +38,14 @@ public class TiersServiceImpl implements TiersService {
     }
     
     @Override
-    public TiersBaseDTO findTiersById(Long id) {
+    public TiersBaseDTO findTiersById(UUID id) {
         Tiers tiers = tiersRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tiers non trouvé avec l'id: " + id));
         return tiersMapper.toBaseDTO(tiers);
     }
     
     @Override
-    public void deleteTiers(Long id) {
+    public void deleteTiers(UUID id) {
         tiersRepository.deleteById(id);
     }
     
@@ -58,7 +59,7 @@ public class TiersServiceImpl implements TiersService {
     }
     
     @Override
-    public ClientDTO updateClient(Long id, ClientDTO clientDTO) {
+    public ClientDTO updateClient(UUID id, ClientDTO clientDTO) {
         Client existing = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client non trouvé avec l'id: " + id));
         
@@ -79,7 +80,7 @@ public class TiersServiceImpl implements TiersService {
     }
     
     @Override
-    public ClientDTO findClientById(Long id) {
+    public ClientDTO findClientById(UUID id) {
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client non trouvé avec l'id: " + id));
         return tiersMapper.toClientDTO(client);
@@ -95,7 +96,7 @@ public class TiersServiceImpl implements TiersService {
     }
     
     @Override
-    public FournisseurDTO updateFournisseur(Long id, FournisseurDTO fournisseurDTO) {
+    public FournisseurDTO updateFournisseur(UUID id, FournisseurDTO fournisseurDTO) {
         Fournisseur existing = fournisseurRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fournisseur non trouvé avec l'id: " + id));
         
@@ -116,7 +117,7 @@ public class TiersServiceImpl implements TiersService {
     }
     
     @Override
-    public FournisseurDTO findFournisseurById(Long id) {
+    public FournisseurDTO findFournisseurById(UUID id) {
         Fournisseur fournisseur = fournisseurRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fournisseur non trouvé avec l'id: " + id));
         return tiersMapper.toFournisseurDTO(fournisseur);
@@ -132,7 +133,7 @@ public class TiersServiceImpl implements TiersService {
     }
     
     @Override
-    public CommercialDTO updateCommercial(Long id, CommercialDTO commercialDTO) {
+    public CommercialDTO updateCommercial(UUID id, CommercialDTO commercialDTO) {
         Commercial existing = commercialRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Commercial non trouvé avec l'id: " + id));
         
@@ -153,7 +154,7 @@ public class TiersServiceImpl implements TiersService {
     }
     
     @Override
-    public CommercialDTO findCommercialById(Long id) {
+    public CommercialDTO findCommercialById(UUID id) {
         Commercial commercial = commercialRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Commercial non trouvé avec l'id: " + id));
         return tiersMapper.toCommercialDTO(commercial);
@@ -169,7 +170,7 @@ public class TiersServiceImpl implements TiersService {
     }
     
     @Override
-    public ProspectDTO updateProspect(Long id, ProspectDTO prospectDTO) {
+    public ProspectDTO updateProspect(UUID id, ProspectDTO prospectDTO) {
         Prospect existing = prospectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Prospect non trouvé avec l'id: " + id));
         
@@ -190,7 +191,7 @@ public class TiersServiceImpl implements TiersService {
     }
     
     @Override
-    public ProspectDTO findProspectById(Long id) {
+    public ProspectDTO findProspectById(UUID id) {
         Prospect prospect = prospectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Prospect non trouvé avec l'id: " + id));
         return tiersMapper.toProspectDTO(prospect);

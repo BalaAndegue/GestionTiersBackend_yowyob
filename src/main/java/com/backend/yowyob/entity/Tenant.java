@@ -1,58 +1,57 @@
 package com.backend.yowyob.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import jakarta.persistence.CascadeType;
 
 @Entity
-@Table(name = "tiers")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "tenant")
+
 @Data
-@NoArgsConstructor 
+
+@NoArgsConstructor
 @AllArgsConstructor
-public class Tiers {
+public class Tenant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    
     private UUID id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_id", nullable = false)
-    private Tenant tenant;
-
-    // Informations de base
-    @Column(nullable = false)
-    private String name;
-
-    private String NUI;
     
-    
-    private String shortName;
-    private String longName;
-    
-    @Column(length = 1000)
-    private String description;
-    
-    // Coordonnées
-    private String email;
-    private String phoneNumber;
+    private String name ;
     private String website;
     
-    // Adresse
+
+    // addresse du tenant 
+   
     private String address;
     private String complement;
     private String postalCode;
     private String city;
-    
-    @Enumerated(EnumType.STRING)
+
+
+
+     @Enumerated(EnumType.STRING)
     private Pays pays;
     
     // Informations entreprise
@@ -73,6 +72,10 @@ public class Tiers {
     
     @Enumerated(EnumType.STRING)
     private TypeEntreprise typeEntreprise;
+
+
+    @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Tiers> tousLesTiers = new ArrayList<>();
     
     // Timestamps
     @CreationTimestamp
@@ -83,7 +86,7 @@ public class Tiers {
     
     // Énumérations
     public enum Pays {
-        CMR, CG, TC, GB, CI
+        CMR, CG, TC, GB, CI,FR, USA 
     }
     
     public enum SecteurActivite {
@@ -102,3 +105,6 @@ public class Tiers {
         PARTICULIER, ENTREPRISE, REVENDEUR
     }
 }
+
+    
+

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/commerciaux")
@@ -32,19 +33,19 @@ public class CommercialController {
 
     @Operation(summary = "Récupérer un commercial par ID")
     @GetMapping("/{id}")
-    public ResponseEntity<CommercialDTO> getCommercialById(@PathVariable Long id) {
+    public ResponseEntity<CommercialDTO> getCommercialById(@PathVariable UUID id) {
         return ResponseEntity.ok(tiersService.findCommercialById(id));
     }
 
     @Operation(summary = "Mettre à jour un commercial")
     @PutMapping("/{id}")
-    public ResponseEntity<CommercialDTO> updateCommercial(@PathVariable Long id, @RequestBody CommercialDTO commercialDTO) {
+    public ResponseEntity<CommercialDTO> updateCommercial(@PathVariable UUID id, @RequestBody CommercialDTO commercialDTO) {
         return ResponseEntity.ok(tiersService.updateCommercial(id, commercialDTO));
     }
 
     @Operation(summary = "Supprimer un commercial")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCommercial(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCommercial(@PathVariable UUID id) {
         tiersService.deleteTiers(id);
         return ResponseEntity.ok().build();
     }

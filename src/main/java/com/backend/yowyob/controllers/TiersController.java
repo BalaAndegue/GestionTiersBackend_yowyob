@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tiers")
@@ -27,13 +28,13 @@ public class TiersController {
     
     @Operation(summary = "Récupérer un tiers par ID", description = "Retourne un tiers spécifique par son ID")
     @GetMapping("/{id}")
-    public ResponseEntity<TiersBaseDTO> getTiersById(@PathVariable Long id) {
+    public ResponseEntity<TiersBaseDTO> getTiersById(@PathVariable UUID id) {
         return ResponseEntity.ok(tiersService.findTiersById(id));
     }
     
     @Operation(summary = "Supprimer un tiers", description = "Supprime un tiers du système")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTiers(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTiers(@PathVariable UUID id) {
         tiersService.deleteTiers(id);
         return ResponseEntity.ok().build();
     }

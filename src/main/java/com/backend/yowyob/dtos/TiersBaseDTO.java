@@ -3,10 +3,11 @@ package com.backend.yowyob.dtos;
 
 import lombok.Data;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 public class TiersBaseDTO {
-    private Long id;
+    private UUID id;
     private String name;
     private String shortName;
     private String longName;
@@ -26,4 +27,5 @@ public class TiersBaseDTO {
     private String numeroFiscal;
     private String canalPrefere;
     private String typeEntreprise;
+    private UUID tenantId;
 }

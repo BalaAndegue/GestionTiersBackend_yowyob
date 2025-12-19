@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/clients")
@@ -55,7 +56,7 @@ public class ClientController {
     @GetMapping("/{id}")
     public ResponseEntity<ClientDTO> getClientById(
             @Parameter(description = "ID du client", required = true)
-            @PathVariable Long id) {
+            @PathVariable UUID id) {
         return ResponseEntity.ok(tiersService.findClientById(id));
     }
 
@@ -67,7 +68,7 @@ public class ClientController {
     @PutMapping("/{id}")
     public ResponseEntity<ClientDTO> updateClient(
             @Parameter(description = "ID du client", required = true)
-            @PathVariable Long id,
+            @PathVariable UUID id,
             @Parameter(description = "Nouvelles données du client", required = true)
             @RequestBody ClientDTO clientDTO) {
         return ResponseEntity.ok(tiersService.updateClient(id, clientDTO));
@@ -81,7 +82,7 @@ public class ClientController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteClient(
             @Parameter(description = "ID du client à supprimer", required = true)
-            @PathVariable Long id) {
+            @PathVariable UUID id) {
         tiersService.deleteTiers(id);
         return ResponseEntity.ok().build();
     }
