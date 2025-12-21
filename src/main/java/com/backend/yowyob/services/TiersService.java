@@ -42,4 +42,38 @@ public interface TiersService {
     ProspectDTO updateProspect(UUID id, ProspectDTO prospectDTO);
     List<ProspectDTO> findAllProspects();
     ProspectDTO findProspectById(UUID id);
+
+
+
+    Tiers activateTiers(UUID id);
+    Tiers deactivateTiers(UUID id);
+    
+    // Récupération par statut
+    List<Tiers> getAllActiveTiers();
+    List<Tiers> getAllInactiveTiers();
+    
+    // Création avec statut
+    Tiers createTiers(Tiers tiers);
+
+    // Spécifiques par type
+    ClientDTO activateClient(UUID id);
+    ClientDTO deactivateClient(UUID id);
+    List<ClientDTO> findActiveClients();
+    List<ClientDTO> findInactiveClients();
+
+    FournisseurDTO activateFournisseur(UUID id);
+    FournisseurDTO deactivateFournisseur(UUID id);
+    List<FournisseurDTO> findActiveFournisseurs();
+    List<FournisseurDTO> findInactiveFournisseurs();
+
+    CommercialDTO activateCommercial(UUID id);
+    CommercialDTO deactivateCommercial(UUID id);
+    List<CommercialDTO> findActiveCommerciaux();
+    List<CommercialDTO> findInactiveCommerciaux();
+
+    ProspectDTO activateProspect(UUID id);
+    ProspectDTO deactivateProspect(UUID id);
+    List<ProspectDTO> findActiveProspects();
+    List<ProspectDTO> findInactiveProspects();
+
 }

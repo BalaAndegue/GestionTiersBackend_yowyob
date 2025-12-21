@@ -13,4 +13,12 @@ import java.util.UUID;
 public interface TiersRepository extends JpaRepository<Tiers, UUID> {
     List<Tiers> findByNameContainingIgnoreCase(String name);
     List<Tiers> findByTypeEntreprise(Tiers.TypeEntreprise typeEntreprise);
+    //trouver  seulement les tiers actifs
+    List<Tiers> findByActiveTrue();
+
+    //trouver seulement les tiers inactifs
+    List<Tiers> findByActiveFalse();
+
+    //trouver par tenant et statut actif
+    List<Tiers> findByTenantAndActiveTrue(Tenant tenant);
 }

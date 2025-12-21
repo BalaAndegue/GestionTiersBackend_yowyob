@@ -1,6 +1,7 @@
 package com.backend.yowyob.controllers;
 
 import com.backend.yowyob.dtos.CommercialDTO;
+import com.backend.yowyob.dtos.FournisseurDTO;
 import com.backend.yowyob.services.TiersService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -48,5 +49,28 @@ public class CommercialController {
     public ResponseEntity<Void> deleteCommercial(@PathVariable UUID id) {
         tiersService.deleteTiers(id);
         return ResponseEntity.ok().build();
+    }
+
+
+
+
+     @PutMapping("/{id}/activate")
+    public ResponseEntity<CommercialDTO> activateCommercial(@PathVariable UUID id) {
+        return ResponseEntity.ok(tiersService.activateCommercial(id));
+    }
+    
+    @PutMapping("/{id}/deactivate")
+    public ResponseEntity<CommercialDTO> deactivateCommercial(@PathVariable UUID id) {
+        return ResponseEntity.ok(tiersService.deactivateCommercial(id));
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<CommercialDTO>> getActiveCommerciaux() {
+        return ResponseEntity.ok(tiersService.findActiveCommerciaux());
+    }
+
+    @GetMapping("/inactive")
+    public ResponseEntity<List<CommercialDTO>> getInactiveCommerciaux() {
+        return ResponseEntity.ok(tiersService.findInactiveCommerciaux());
     }
 }

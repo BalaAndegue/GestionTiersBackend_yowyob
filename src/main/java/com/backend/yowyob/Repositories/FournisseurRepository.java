@@ -14,4 +14,6 @@ import java.util.UUID;
 @Repository
 public interface FournisseurRepository extends JpaRepository<Fournisseur, UUID> {
     List<Fournisseur> findByModePaiement(Fournisseur.ModePaiement modePaiement);
+    List<Fournisseur> findByActiveTrue();
+    List<Fournisseur> findByActiveFalse();
 }

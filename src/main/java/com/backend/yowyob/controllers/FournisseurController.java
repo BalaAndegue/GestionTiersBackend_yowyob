@@ -50,4 +50,24 @@ public class FournisseurController {
         tiersService.deleteTiers(id);
         return ResponseEntity.ok().build();
     }
+
+     @PutMapping("/{id}/activate")
+    public ResponseEntity<FournisseurDTO> activateFournisseur(@PathVariable UUID id) {
+        return ResponseEntity.ok(tiersService.activateFournisseur(id));
+    }
+    
+    @PutMapping("/{id}/deactivate")
+    public ResponseEntity<FournisseurDTO> deactivateFournisseur(@PathVariable UUID id) {
+        return ResponseEntity.ok(tiersService.deactivateFournisseur(id));
+    }
+    
+    @GetMapping("/active")
+    public ResponseEntity<List<FournisseurDTO>> getActiveFournisseurs() {
+        return ResponseEntity.ok(tiersService.findActiveFournisseurs());
+    }
+
+    @GetMapping("/inactive")
+    public ResponseEntity<List<FournisseurDTO>> getInactiveFournisseurs() {
+        return ResponseEntity.ok(tiersService.findInactiveFournisseurs());
+    }
 }

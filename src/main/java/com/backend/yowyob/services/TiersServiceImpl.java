@@ -3,6 +3,9 @@ package com.backend.yowyob.services;
 import com.backend.yowyob.dtos.*;
 import com.backend.yowyob.entity.*;
 import com.backend.yowyob.mapper.TiersMapper;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import com.backend.yowyob.Repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -195,5 +198,154 @@ public class TiersServiceImpl implements TiersService {
         Prospect prospect = prospectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Prospect non trouvé avec l'id: " + id));
         return tiersMapper.toProspectDTO(prospect);
+    }
+
+
+    // Activer un tiers
+    public Tiers activateTiers(UUID id) {
+        Tiers tiers = tiersRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Tiers non trouvé"));
+        tiers.activate();
+        return tiersRepository.save(tiers);
+    }
+    
+    // Désactiver un tiers
+    public Tiers deactivateTiers(UUID id) {
+        Tiers tiers = tiersRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Tiers non trouvé"));
+        tiers.deactivate();
+        return tiersRepository.save(tiers);
+    }
+    
+    // Récupérer seulement les tiers actifs
+    public List<Tiers> getAllActiveTiers() {
+        return tiersRepository.findByActiveTrue();
+    }
+    
+    // Récupérer seulement les tiers inactifs
+    public List<Tiers> getAllInactiveTiers() {
+        return tiersRepository.findByActiveFalse();
+    }
+    
+    // Créer un tiers (actif par défaut)
+    public Tiers createTiers(Tiers tiers) {
+        tiers.setActive(true); // S'assurer qu'il est actif à la création
+        return tiersRepository.save(tiers);
+    }
+
+    // Pour les Clients
+    public ClientDTO activateClient(UUID id) {
+        Client client = clientRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Client non trouvé"));
+        client.setActive(true);
+        Client saved = clientRepository.save(client);
+        return tiersMapper.toClientDTO(saved);
+    }
+    
+    public ClientDTO deactivateClient(UUID id) {
+        Client client = clientRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Client non trouvé"));
+        client.setActive(false);
+        Client saved = clientRepository.save(client);
+        return tiersMapper.toClientDTO(saved);
+    }
+    
+    public List<ClientDTO> findActiveClients() {
+        return clientRepository.findByActiveTrue().stream()
+            .map(tiersMapper::toClientDTO)
+            .collect(Collectors.toList());
+    }
+
+    public List<ClientDTO> findInactiveClients() {
+        return clientRepository.findByActiveFalse().stream()
+            .map(tiersMapper::toClientDTO)
+            .collect(Collectors.toList());
+    }
+
+    // Pour les Fournisseurs
+    public FournisseurDTO activateFournisseur(UUID id) {
+        Fournisseur fournisseur = fournisseurRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Fournisseur non trouvé"));
+        fournisseur.setActive(true);
+        Fournisseur saved = fournisseurRepository.save(fournisseur);
+        return tiersMapper.toFournisseurDTO(saved);
+    }
+    
+    public FournisseurDTO deactivateFournisseur(UUID id) {
+        Fournisseur fournisseur = fournisseurRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Fournisseur non trouvé"));
+        fournisseur.setActive(false);
+        Fournisseur saved = fournisseurRepository.save(fournisseur);
+        return tiersMapper.toFournisseurDTO(saved);
+    }
+    
+    public List<FournisseurDTO> findActiveFournisseurs() {
+        return fournisseurRepository.findByActiveTrue().stream()
+            .map(tiersMapper::toFournisseurDTO)
+            .collect(Collectors.toList());
+    }
+
+    public List<FournisseurDTO> findInactiveFournisseurs() {
+        return fournisseurRepository.findByActiveFalse().stream()
+            .map(tiersMapper::toFournisseurDTO)
+            .collect(Collectors.toList());
+    }
+
+    // Pour les Commerciaux
+    public CommercialDTO activateCommercial(UUID id) {
+        Commercial commercial = commercialRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Commercial non trouvé"));
+        commercial.setActive(true);
+        Commercial saved = commercialRepository.save(commercial);
+        return tiersMapper.toCommercialDTO(saved);
+    }
+    
+    public CommercialDTO deactivateCommercial(UUID id) {
+        Commercial commercial = commercialRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Commercial non trouvé"));
+        commercial.setActive(false);
+        Commercial saved = commercialRepository.save(commercial);
+        return tiersMapper.toCommercialDTO(saved);
+    }
+    
+    public List<CommercialDTO> findActiveCommerciaux() {
+        return commercialRepository.findByActiveTrue().stream()
+            .map(tiersMapper::toCommercialDTO)
+            .collect(Collectors.toList());
+    }
+
+    public List<CommercialDTO> findInactiveCommerciaux() {
+        return commercialRepository.findByActiveFalse().stream()
+            .map(tiersMapper::toCommercialDTO)
+            .collect(Collectors.toList());
+    }
+
+    // Pour les Prospects
+    public ProspectDTO activateProspect(UUID id) {
+        Prospect prospect = prospectRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Prospect non trouvé"));
+        prospect.setActive(true);
+        Prospect saved = prospectRepository.save(prospect);
+        return tiersMapper.toProspectDTO(saved);
+    }
+    
+    public ProspectDTO deactivateProspect(UUID id) {
+        Prospect prospect = prospectRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Prospect non trouvé"));
+        prospect.setActive(false);
+        Prospect saved = prospectRepository.save(prospect);
+        return tiersMapper.toProspectDTO(saved);
+    }
+    
+    public List<ProspectDTO> findActiveProspects() {
+        return prospectRepository.findByActiveTrue().stream()
+            .map(tiersMapper::toProspectDTO)
+            .collect(Collectors.toList());
+    }
+
+    public List<ProspectDTO> findInactiveProspects() {
+        return prospectRepository.findByActiveFalse().stream()
+            .map(tiersMapper::toProspectDTO)
+            .collect(Collectors.toList());
     }
 }

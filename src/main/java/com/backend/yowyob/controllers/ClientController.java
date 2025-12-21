@@ -86,4 +86,27 @@ public class ClientController {
         tiersService.deleteTiers(id);
         return ResponseEntity.ok().build();
     }
+     // Activer un client
+    @PutMapping("/{id}/activate")
+    public ResponseEntity<ClientDTO> activateClient(@PathVariable UUID id) {
+        return ResponseEntity.ok(tiersService.activateClient(id));
+    }
+    
+    // Désactiver un client
+    @PutMapping("/{id}/deactivate")
+    public ResponseEntity<ClientDTO> deactivateClient(@PathVariable UUID id) {
+        return ResponseEntity.ok(tiersService.deactivateClient(id));
+    }
+    
+    // Récupérer seulement les clients actifs
+    @GetMapping("/active")
+    public ResponseEntity<List<ClientDTO>> getActiveClients() {
+        return ResponseEntity.ok(tiersService.findActiveClients());
+    }
+
+    // Récupérer seulement les clients inactifs
+    @GetMapping("/inactive")
+    public ResponseEntity<List<ClientDTO>> getInactiveClients() {
+        return ResponseEntity.ok(tiersService.findInactiveClients());
+    }
 }

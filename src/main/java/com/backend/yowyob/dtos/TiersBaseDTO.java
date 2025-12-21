@@ -11,6 +11,7 @@ public class TiersBaseDTO {
     private String name;
     private String shortName;
     private String longName;
+    private Boolean active;
     private String description;
     private String email;
     private String phoneNumber;

@@ -14,5 +14,7 @@ import java.util.UUID;
 @Repository
 public interface CommercialRepository extends JpaRepository<Commercial, UUID> {
     List<Commercial> findByTypeCommercial(Commercial.TypeCommercial typeCommercial);
+    List<Commercial> findByActiveTrue();
+    List<Commercial> findByActiveFalse();
 }
 

@@ -1,5 +1,6 @@
 package com.backend.yowyob.controllers;
 
+import com.backend.yowyob.dtos.FournisseurDTO;
 import com.backend.yowyob.dtos.ProspectDTO;
 import com.backend.yowyob.services.TiersService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,5 +49,28 @@ public class ProspectController {
     public ResponseEntity<Void> deleteProspect(@PathVariable UUID id) {
         tiersService.deleteTiers(id);
         return ResponseEntity.ok().build();
+    }
+
+
+
+
+     @PutMapping("/{id}/activate")
+    public ResponseEntity<ProspectDTO> activateProspect(@PathVariable UUID id) {
+        return ResponseEntity.ok(tiersService.activateProspect(id));
+    }
+    
+    @PutMapping("/{id}/deactivate")
+    public ResponseEntity<ProspectDTO> deactivateProspect(@PathVariable UUID id) {
+        return ResponseEntity.ok(tiersService.deactivateProspect(id));
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<ProspectDTO>> getActiveProspects() {
+        return ResponseEntity.ok(tiersService.findActiveProspects());
+    }
+
+    @GetMapping("/inactive")
+    public ResponseEntity<List<ProspectDTO>> getInactiveProspects() {
+        return ResponseEntity.ok(tiersService.findInactiveProspects());
     }
 }

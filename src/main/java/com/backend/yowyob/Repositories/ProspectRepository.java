@@ -17,4 +17,6 @@ public interface ProspectRepository extends JpaRepository<Prospect, UUID> {
     
     @Query("SELECT p FROM Prospect p WHERE p.probabilite > :minProbabilite")
     List<Prospect> findByProbabiliteGreaterThan(Integer minProbabilite);
+    List<Prospect> findByActiveTrue();
+    List<Prospect> findByActiveFalse();
 }

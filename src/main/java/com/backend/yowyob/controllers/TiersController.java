@@ -1,6 +1,7 @@
 package com.backend.yowyob.controllers;
 
 import com.backend.yowyob.dtos.TiersBaseDTO;
+import com.backend.yowyob.entity.Tiers;
 import com.backend.yowyob.services.TiersService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,5 +38,29 @@ public class TiersController {
     public ResponseEntity<Void> deleteTiers(@PathVariable UUID id) {
         tiersService.deleteTiers(id);
         return ResponseEntity.ok().build();
+    }
+
+    // Activer un tiers
+    @PutMapping("/{id}/activate")
+    public ResponseEntity<Tiers> activateTiers(@PathVariable UUID id) {
+        return ResponseEntity.ok(tiersService.activateTiers(id));
+    }
+    
+    // Désactiver un tiers
+    @PutMapping("/{id}/deactivate")
+    public ResponseEntity<Tiers> deactivateTiers(@PathVariable UUID id) {
+        return ResponseEntity.ok(tiersService.deactivateTiers(id));
+    }
+    
+    // Récupérer seulement les tiers actifs
+    @GetMapping("/active")
+    public ResponseEntity<List<Tiers>> getActiveTiers() {
+        return ResponseEntity.ok(tiersService.getAllActiveTiers());
+    }
+    
+    // Récupérer seulement les tiers inactifs
+    @GetMapping("/inactive")
+    public ResponseEntity<List<Tiers>> getInactiveTiers() {
+        return ResponseEntity.ok(tiersService.getAllInactiveTiers());
     }
 }

@@ -13,5 +13,7 @@ import java.util.UUID;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, UUID> {
     List<Client> findBySegment(Client.SegmentClient segment);
+    List<Client> findByActiveTrue();
+    List<Client> findByActiveFalse();
 }
 

@@ -80,7 +80,11 @@ public class Tiers {
     
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    
+
+    //activation / desactivation d'un tiers
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private Boolean active =true;
+
     // Énumérations
     public enum Pays {
         CMR, CG, TC, GB, CI
@@ -100,5 +104,17 @@ public class Tiers {
     
     public enum TypeEntreprise {
         PARTICULIER, ENTREPRISE, REVENDEUR
+    }
+
+   public void activate() {
+        this.active = true;
+    }
+    
+    public void deactivate() {
+        this.active = false;
+    }
+    
+    public boolean isActive() {
+        return this.active;
     }
 }
