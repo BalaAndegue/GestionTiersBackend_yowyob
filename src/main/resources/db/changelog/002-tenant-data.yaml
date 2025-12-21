@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-1
+      author: bala
+      changes:
+        - insert:
+            tableName: tenant
+            columns:
+              - column:
+                  name: id
+                  value: "550e8400-e29b-41d4-a716-446655440000"
+              - column:
+                  name: name
+                  value: "Yowyob Admin"
+              - column:
+                  name: website
+                  value: "https://yowyob.com"
+              - column:
+                  name: address
+                  value: "123 Rue Principale"
+              - column:
+                  name: city
+                  value: "Paris"
+              - column:
+                  name: pays
+                  value: "FR"
+              - column:
+                  name: secteur_activite
+                  value: "IT"
+              - column:
+                  name: taille_entreprise
+                  value: "PME"
+              - column:
+                  name: canal_prefere
+                  value: "EMAIL"
+              - column:
+                  name: type_entreprise
+                  value: "ENTREPRISE"

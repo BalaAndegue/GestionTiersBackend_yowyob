@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-1
+      author: bala
+      changes:
+        - createIndex:
+            tableName: tenant
+            indexName: idx_tenant_name
+            columns:
+              - column:
+                  name: name
+        - createIndex:
+            tableName: tenant
+            indexName: idx_tenant_city
+            columns:
+              - column:
+                  name: city
+        
+        - createIndex:
+            tableName: tiers
+            indexName: idx_tiers_tenant_id
+            columns:
+              - column:
+                  name: tenant_id
+        - createIndex:
+            tableName: tiers
+            indexName: idx_tiers_name
+            columns:
+              - column:
+                  name: name
+        - createIndex:
+            tableName: tiers
+            indexName: idx_tiers_email
+            columns:
+              - column:
+                  name: email
+        - createIndex:
+            tableName: tiers
+            indexName: idx_tiers_nui
+            columns:
+              - column:
+                  name: nui

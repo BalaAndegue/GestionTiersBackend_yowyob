@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "tenant")
@@ -40,6 +41,9 @@ public class Tenant {
     
     private String name ;
     private String website;
+
+    @Column(unique = true, nullable = false)  // email unique et obligatoire
+    private String email;
     
 
     // addresse du tenant 

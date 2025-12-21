@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: yowyob-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    region: frankfurt
+    plan: free
+    
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: JAVA_OPTS
+        value: "-Xmx512m -Xms256m -Djava.security.egd=file:/dev/./urandom"
+      - key: SPRING_LIQUIBASE_ENABLED
+        value: "true"
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: "none"  # Désactivé car on utilise Liquibase
+    
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+    numInstances: 1
+
+databases:
+  - name: yowyob-db
+    databaseName: yowyob
+    user: yowyob_user
+    plan: free
+    region: frankfurt
