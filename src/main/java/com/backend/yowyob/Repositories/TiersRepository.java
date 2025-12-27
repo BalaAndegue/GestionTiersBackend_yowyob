@@ -21,4 +21,6 @@ public interface TiersRepository extends JpaRepository<Tiers, UUID> {
 
     //trouver par tenant et statut actif
     List<Tiers> findByTenantAndActiveTrue(Tenant tenant);
+
+    List<Tiers> findByAgencyId(UUID agencyId);
 }

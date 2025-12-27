@@ -17,6 +17,7 @@ public interface TiersService {
     // Méthodes communes
     List<TiersBaseDTO> findAllTiers();
     TiersBaseDTO findTiersById(UUID id);
+    List<TiersBaseDTO> findTiersByAgency(UUID agencyId);
     void deleteTiers(UUID id);
     
     // Clients
@@ -47,6 +48,7 @@ public interface TiersService {
 
     Tiers activateTiers(UUID id);
     Tiers deactivateTiers(UUID id);
+    Tiers assignTierToAgency(UUID tierId, UUID agencyId);
     
     // Récupération par statut
     List<Tiers> getAllActiveTiers();

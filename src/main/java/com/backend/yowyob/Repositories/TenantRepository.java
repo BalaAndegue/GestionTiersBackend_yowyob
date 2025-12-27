@@ -10,7 +10,8 @@ import java.util.UUID;
 @Repository
 public interface TenantRepository extends JpaRepository<Tenant, UUID> {
     
-    List<Tenant> findByNameContainingIgnoreCase(String name);
+    List<Tenant> findByShortNameContainingIgnoreCase(String shortName);
+    List<Tenant> findByLongNameContainingIgnoreCase(String longName);
     
     boolean existsByEmail(String email); // Si vous ajoutez un champ email
     

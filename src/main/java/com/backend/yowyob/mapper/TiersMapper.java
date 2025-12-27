@@ -11,6 +11,8 @@ public interface TiersMapper {
     TiersMapper INSTANCE = Mappers.getMapper(TiersMapper.class);
     
     // Mappings de base
+    @Mapping(target = "tenantId", source = "tenant.id")
+    @Mapping(target = "agencyId", source = "agency.id")
     TiersBaseDTO toBaseDTO(Tiers tiers);
     Tiers toBaseEntity(TiersBaseDTO dto);
     

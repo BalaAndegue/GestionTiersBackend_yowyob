@@ -32,6 +32,12 @@ public class TiersController {
     public ResponseEntity<TiersBaseDTO> getTiersById(@PathVariable UUID id) {
         return ResponseEntity.ok(tiersService.findTiersById(id));
     }
+
+    @Operation(summary = "Récupérer les tiers par agence", description = "Retourne la liste des tiers liés à une agence")
+    @GetMapping("/agency/{agencyId}")
+    public ResponseEntity<List<TiersBaseDTO>> getTiersByAgency(@PathVariable UUID agencyId) {
+        return ResponseEntity.ok(tiersService.findTiersByAgency(agencyId));
+    }
     
     @Operation(summary = "Supprimer un tiers", description = "Supprime un tiers du système")
     @DeleteMapping("/{id}")
@@ -62,5 +68,12 @@ public class TiersController {
     @GetMapping("/inactive")
     public ResponseEntity<List<Tiers>> getInactiveTiers() {
         return ResponseEntity.ok(tiersService.getAllInactiveTiers());
+    }
+
+    // Affecter un tiers à une agence
+    @Operation(summary = "Affecter un tiers à une agence", description = "Associe un tiers à une agence spécifique. Vérifie si l'agence est ouverte.")
+    @PutMapping("/{id}/assign-agency/{agencyId}")
+    public ResponseEntity<Tiers> assignTierToAgency(@PathVariable UUID id, @PathVariable UUID agencyId) {
+        return ResponseEntity.ok(tiersService.assignTierToAgency(id, agencyId));
     }
 }

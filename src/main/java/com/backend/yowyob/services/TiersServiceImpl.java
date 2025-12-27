@@ -28,6 +28,8 @@ public class TiersServiceImpl implements TiersService {
     private final CommercialRepository commercialRepository;
     private final ProspectRepository prospectRepository;
     private final TiersMapper tiersMapper;
+    private final AgencyService agencyService;
+    private final AgencyRepository agencyRepository;
     
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
@@ -45,6 +47,13 @@ public class TiersServiceImpl implements TiersService {
         Tiers tiers = tiersRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tiers non trouvé avec l'id: " + id));
         return tiersMapper.toBaseDTO(tiers);
+    }
+
+    @Override
+    public List<TiersBaseDTO> findTiersByAgency(UUID agencyId) {
+        return tiersRepository.findByAgencyId(agencyId).stream()
+                .map(tiersMapper::toBaseDTO)
+                .collect(Collectors.toList());
     }
     
     @Override
@@ -205,6 +214,12 @@ public class TiersServiceImpl implements TiersService {
     public Tiers activateTiers(UUID id) {
         Tiers tiers = tiersRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Tiers non trouvé"));
+            
+        // Check Agency Opening Hours
+        if (tiers.getAgency() != null) {
+            checkAgencyOpen(tiers.getAgency().getId());
+        }
+            
         tiers.activate();
         return tiersRepository.save(tiers);
     }
@@ -213,8 +228,35 @@ public class TiersServiceImpl implements TiersService {
     public Tiers deactivateTiers(UUID id) {
         Tiers tiers = tiersRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Tiers non trouvé"));
+
+        // Check Agency Opening Hours
+        if (tiers.getAgency() != null) {
+            checkAgencyOpen(tiers.getAgency().getId());
+        }
+
         tiers.deactivate();
         return tiersRepository.save(tiers);
+    }
+
+    @Override
+    public Tiers assignTierToAgency(UUID tierId, UUID agencyId) {
+        Tiers tiers = tiersRepository.findById(tierId)
+                .orElseThrow(() -> new EntityNotFoundException("Tiers non trouvé"));
+        
+        Agency agency = agencyRepository.findById(agencyId)
+                .orElseThrow(() -> new EntityNotFoundException("Agence non trouvée"));
+        
+        // Check if target agency is open
+        checkAgencyOpen(agencyId);
+        
+        tiers.setAgency(agency);
+        return tiersRepository.save(tiers);
+    }
+
+    private void checkAgencyOpen(UUID agencyId) {
+        if (!agencyService.isAgencyOpen(agencyId, java.time.LocalDateTime.now())) {
+            throw new RuntimeException("Action non autorisée : L'agence est fermée actuellement.");
+        }
     }
     
     // Récupérer seulement les tiers actifs
@@ -237,6 +279,11 @@ public class TiersServiceImpl implements TiersService {
     public ClientDTO activateClient(UUID id) {
         Client client = clientRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Client non trouvé"));
+            
+        if (client.getAgency() != null) {
+            checkAgencyOpen(client.getAgency().getId());
+        }
+        
         client.setActive(true);
         Client saved = clientRepository.save(client);
         return tiersMapper.toClientDTO(saved);
@@ -245,6 +292,11 @@ public class TiersServiceImpl implements TiersService {
     public ClientDTO deactivateClient(UUID id) {
         Client client = clientRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Client non trouvé"));
+            
+        if (client.getAgency() != null) {
+            checkAgencyOpen(client.getAgency().getId());
+        }
+
         client.setActive(false);
         Client saved = clientRepository.save(client);
         return tiersMapper.toClientDTO(saved);
@@ -266,6 +318,11 @@ public class TiersServiceImpl implements TiersService {
     public FournisseurDTO activateFournisseur(UUID id) {
         Fournisseur fournisseur = fournisseurRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Fournisseur non trouvé"));
+            
+        if (fournisseur.getAgency() != null) {
+            checkAgencyOpen(fournisseur.getAgency().getId());
+        }
+
         fournisseur.setActive(true);
         Fournisseur saved = fournisseurRepository.save(fournisseur);
         return tiersMapper.toFournisseurDTO(saved);
@@ -274,6 +331,11 @@ public class TiersServiceImpl implements TiersService {
     public FournisseurDTO deactivateFournisseur(UUID id) {
         Fournisseur fournisseur = fournisseurRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Fournisseur non trouvé"));
+
+        if (fournisseur.getAgency() != null) {
+            checkAgencyOpen(fournisseur.getAgency().getId());
+        }
+
         fournisseur.setActive(false);
         Fournisseur saved = fournisseurRepository.save(fournisseur);
         return tiersMapper.toFournisseurDTO(saved);
@@ -295,6 +357,11 @@ public class TiersServiceImpl implements TiersService {
     public CommercialDTO activateCommercial(UUID id) {
         Commercial commercial = commercialRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Commercial non trouvé"));
+
+        if (commercial.getAgency() != null) {
+            checkAgencyOpen(commercial.getAgency().getId());
+        }
+
         commercial.setActive(true);
         Commercial saved = commercialRepository.save(commercial);
         return tiersMapper.toCommercialDTO(saved);
@@ -303,6 +370,11 @@ public class TiersServiceImpl implements TiersService {
     public CommercialDTO deactivateCommercial(UUID id) {
         Commercial commercial = commercialRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Commercial non trouvé"));
+
+        if (commercial.getAgency() != null) {
+            checkAgencyOpen(commercial.getAgency().getId());
+        }
+
         commercial.setActive(false);
         Commercial saved = commercialRepository.save(commercial);
         return tiersMapper.toCommercialDTO(saved);
@@ -324,6 +396,11 @@ public class TiersServiceImpl implements TiersService {
     public ProspectDTO activateProspect(UUID id) {
         Prospect prospect = prospectRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Prospect non trouvé"));
+
+        if (prospect.getAgency() != null) {
+            checkAgencyOpen(prospect.getAgency().getId());
+        }
+
         prospect.setActive(true);
         Prospect saved = prospectRepository.save(prospect);
         return tiersMapper.toProspectDTO(saved);
@@ -332,6 +409,11 @@ public class TiersServiceImpl implements TiersService {
     public ProspectDTO deactivateProspect(UUID id) {
         Prospect prospect = prospectRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Prospect non trouvé"));
+
+        if (prospect.getAgency() != null) {
+            checkAgencyOpen(prospect.getAgency().getId());
+        }
+
         prospect.setActive(false);
         Prospect saved = prospectRepository.save(prospect);
         return tiersMapper.toProspectDTO(saved);

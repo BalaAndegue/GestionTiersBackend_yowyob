@@ -1,36 +1,21 @@
 package com.backend.yowyob.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "tenant")
-
 @Data
-
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tenant {
@@ -38,77 +23,80 @@ public class Tenant {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    
-    private String name ;
-    private String website;
 
-    @Column(unique = true, nullable = false)  // email unique et obligatoire
+    private String code;
+    private String service;
+
+    @Column(name = "business_actor_id")
+    private UUID businessActorId;
+
+    @Column(name = "is_individual_business")
+    private Boolean isIndividualBusiness;
+
+    @Column(unique = true)
     private String email;
-    
 
-    // addresse du tenant 
-   
-    private String address;
-    private String complement;
-    private String postalCode;
-    private String city;
+    @Column(name = "short_name")
+    private String shortName;
 
+    @Column(name = "long_name")
+    private String longName;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
-     @Enumerated(EnumType.STRING)
-    private Pays pays;
-    
-    // Informations entreprise
-    @Enumerated(EnumType.STRING)
-    private SecteurActivite secteurActivite;
-    
-    @Enumerated(EnumType.STRING)
-    private TailleEntreprise tailleEntreprise;
-    
-    private LocalDate dateCreation;
-    private String registreCommerce;
-    private String numeroFiscal;
-    private String enterpriseName ; 
-    
-    // Canal préféré
-    @Enumerated(EnumType.STRING)
-    private CanalPrefere canalPrefere;
-    
-    @Enumerated(EnumType.STRING)
-    private TypeEntreprise typeEntreprise;
+    @Column(name = "logo_url")
+    private String logoUrl;
 
+    @Column(name = "logo_id")
+    private UUID logoId;
 
-    @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Tiers> tousLesTiers = new ArrayList<>();
-    
-    // Timestamps
+    @Column(name = "website_url")
+    private String websiteUrl;
+
+    @Column(name = "social_network")
+    private String socialNetwork;
+
+    @Column(name = "business_registration_number")
+    private String businessRegistrationNumber;
+
+    @Column(name = "tax_number")
+    private String taxNumber;
+
+    @Column(name = "capital_share")
+    private BigDecimal capitalShare;
+
+    @Column(name = "ceo_name")
+    private String ceoName;
+
+    @Column(name = "year_founded")
+    private Integer yearFounded;
+
+    @Column(name = "keywords", columnDefinition = "text[]")
+    private List<String> keywords;
+
+    @Column(name = "number_of_employees")
+    private Integer numberOfEmployees;
+
+    @Column(name = "legal_form")
+    private String legalForm;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
+
+    private String status;
+
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Agency> agencies = new ArrayList<>();
+
     @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-    
+
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    
-    // Énumérations
-    public enum Pays {
-        CMR, CG, TC, GB, CI,FR, USA 
-    }
-    
-    public enum SecteurActivite {
-        IT, FINANCE, SANTE, INDUSTRIE, COMMERCE
-    }
-    
-    public enum TailleEntreprise {
-        MICRO, PME, ETI, GE
-    }
-    
-    public enum CanalPrefere {
-        EMAIL, PHONE, COURRIER, IN_PERSON
-    }
-    
-    public enum TypeEntreprise {
-        PARTICULIER, ENTREPRISE, REVENDEUR
-    }
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 }
-
-    
-

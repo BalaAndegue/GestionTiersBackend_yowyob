@@ -63,7 +63,7 @@ public class TenantService {
     
     // Recherche par nom
     public List<TenantDTO> searchTenantsByName(String name) {
-        return tenantRepository.findByNameContainingIgnoreCase(name)
+        return tenantRepository.findByShortNameContainingIgnoreCase(name)
                 .stream()
                 .map(tenantMapper::toDTO)
                 .collect(Collectors.toList());

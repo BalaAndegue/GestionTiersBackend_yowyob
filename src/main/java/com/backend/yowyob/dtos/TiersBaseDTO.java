@@ -29,4 +29,5 @@ public class TiersBaseDTO {
     private String canalPrefere;
     private String typeEntreprise;
     private UUID tenantId;
+    private UUID agencyId;
 }
