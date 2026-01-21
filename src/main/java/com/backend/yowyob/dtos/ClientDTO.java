@@ -17,5 +17,6 @@ public class ClientDTO extends TiersBaseDTO {
     
     private BigDecimal plafondCredit;
     private String canalAquisition;
+    private Boolean estAssujettiTVA;
 }
 

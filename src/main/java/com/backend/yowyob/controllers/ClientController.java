@@ -109,4 +109,23 @@ public class ClientController {
     public ResponseEntity<List<ClientDTO>> getInactiveClients() {
         return ResponseEntity.ok(tiersService.findInactiveClients());
     }
+
+    @Operation(summary = "Mettre à jour les canaux de vente", description = "Active ou désactive les canaux de vente (Détail, Demi-Gros, Gros, Super-Gros)")
+    @PutMapping("/{id}/sales-channels")
+    public ResponseEntity<ClientDTO> updateSalesChannels(
+            @PathVariable UUID id,
+            @RequestParam(required = false) Boolean venteDetail,
+            @RequestParam(required = false) Boolean venteDemiGros,
+            @RequestParam(required = false) Boolean venteGros,
+            @RequestParam(required = false) Boolean venteSuperGros) {
+        return ResponseEntity.ok(tiersService.updateClientSalesChannels(id, venteDetail, venteDemiGros, venteGros, venteSuperGros));
+    }
+
+    @Operation(summary = "Mettre à jour le statut TVA", description = "Défini si le client est assujetti à la TVA")
+    @PutMapping("/{id}/tva")
+    public ResponseEntity<ClientDTO> updateTvaStatus(
+            @PathVariable UUID id,
+            @RequestParam Boolean assujetti) {
+        return ResponseEntity.ok(tiersService.updateClientTvaStatus(id, assujetti));
+    }
 }

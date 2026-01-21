@@ -30,6 +30,9 @@ public class Client extends Tiers {
     // Nouveaux champs spécifiques aux clients
     @Column(name = "numero_tva")
     private String numeroTVA;
+
+    @Column(name = "est_assujetti_tva", columnDefinition = "boolean default false")
+    private Boolean estAssujettiTVA = false;
     
     @Column(name = "vente_detail", columnDefinition = "boolean default false")
     private Boolean venteDetail = false;

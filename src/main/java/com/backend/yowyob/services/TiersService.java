@@ -78,4 +78,8 @@ public interface TiersService {
     List<ProspectDTO> findActiveProspects();
     List<ProspectDTO> findInactiveProspects();
 
+    // Client specific settings
+    ClientDTO updateClientSalesChannels(UUID id, Boolean venteDetail, Boolean venteDemiGros, Boolean venteGros, Boolean venteSuperGros);
+    ClientDTO updateClientTvaStatus(UUID id, Boolean estAssujettiTVA);
+
 }
