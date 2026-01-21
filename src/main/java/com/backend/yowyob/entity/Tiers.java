@@ -32,7 +32,13 @@ public class Tiers {
     @JoinColumn(name = "agency_id")
     private Agency agency;
 
+    @Column(nullable = false, unique = true, updatable = false)
+    private String code;
+
     // Informations de base
+    @Column(name = "compte_comptable")
+    private String compteComptable;
+
     @Column(nullable = false)
     private String name;
 

@@ -27,8 +27,33 @@ public class Client extends Tiers {
     @Column(name = "canal_aquisition")
     private CanalAquisition canalAquisition;
     
+    // Nouveaux champs spécifiques aux clients
+    @Column(name = "numero_tva")
+    private String numeroTVA;
+    
+    @Column(name = "vente_detail", columnDefinition = "boolean default false")
+    private Boolean venteDetail = false;
+    
+    @Column(name = "vente_demi_gros", columnDefinition = "boolean default false")
+    private Boolean venteDemiGros = false;
+    
+    @Column(name = "vente_gros", columnDefinition = "boolean default false")
+    private Boolean venteGros = false;
+    
+    @Column(name = "vente_super_gros", columnDefinition = "boolean default false")
+    private Boolean venteSuperGros = false;
+    
+   
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_client_ohada")
+    private TypeClientOhada typeClientOhada;
+
     public enum SegmentClient {
         PARTICULIER, ENTREPRISE, REVENDEUR
+    }
+
+    public enum TypeClientOhada {
+        ORDINAIRE, ETAT, GROUPE, DOUTEUX, DIVERS
     }
     
     public enum CanalAquisition {

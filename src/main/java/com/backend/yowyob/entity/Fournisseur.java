@@ -27,11 +27,19 @@ public class Fournisseur extends Tiers {
     
     private String certification;
     
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_fournisseur_ohada")
+    private TypeFournisseurOhada typeFournisseurOhada;
+
     public enum ModePaiement {
         VIREMENT, CHEQUE, TRAITE
     }
     
     public enum ProduitPrincipal {
         ELECTRONIQUE, MATERIEL, LOGICIEL
+    }
+
+    public enum TypeFournisseurOhada {
+        EXPLOITATION, GROUPE, IMMOBILISATIONS, DIVERS
     }
 }

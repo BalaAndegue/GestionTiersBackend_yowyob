@@ -35,6 +35,10 @@ public class Commercial extends Tiers {
     
     @Enumerated(EnumType.STRING)
     private Specialisation specialisations;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_personnel_ohada")
+    private TypePersonnelOhada typePersonnelOhada;
     
     public enum TypeCommercial {
         INTERNE, EXTERNE, INDEPENDANT
@@ -46,5 +50,9 @@ public class Commercial extends Tiers {
     
     public enum Specialisation {
         B2B, B2C, SECTEUR_PUBLIC, GRANDS_COMPTES
+    }
+
+    public enum TypePersonnelOhada {
+        PERSONNEL, ORGANISMES_SOCIAUX, ETAT, DIVERS
     }
 }

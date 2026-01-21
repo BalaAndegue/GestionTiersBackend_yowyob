@@ -30,6 +30,10 @@ public class Prospect extends Tiers {
     
     @Column(name = "notes_prospect", length = 2000)
     private String notesProspect;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_prospect_ohada")
+    private TypeProspectOhada typeProspectOhada;
     
     public enum SourceProspect {
         SITE_WEB, RESEAU_SOCIAL, SALON, RECOMMANDATION
@@ -37,5 +41,9 @@ public class Prospect extends Tiers {
     
     public enum Potentiel {
         FAIBLE, MOYEN, ELEVE, STRATEGIQUE
+    }
+
+    public enum TypeProspectOhada {
+        ORDINAIRE, STRATEGIQUE, PARTENAIRE
     }
 }

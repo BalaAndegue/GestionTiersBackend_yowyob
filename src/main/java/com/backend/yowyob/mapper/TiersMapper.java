@@ -86,4 +86,35 @@ public interface TiersMapper {
     }
     
     // Ajoutez les autres mappings d'enum nécessaires...
+    default String map(Client.TypeClientOhada type) {
+        return type != null ? type.name() : null;
+    }
+
+    default Client.TypeClientOhada mapTypeClientOhada(String type) {
+        return type != null ? Client.TypeClientOhada.valueOf(type) : null;
+    }
+
+    default String map(Fournisseur.TypeFournisseurOhada type) {
+        return type != null ? type.name() : null;
+    }
+
+    default Fournisseur.TypeFournisseurOhada mapTypeFournisseurOhada(String type) {
+        return type != null ? Fournisseur.TypeFournisseurOhada.valueOf(type) : null;
+    }
+
+    default String map(Commercial.TypePersonnelOhada type) {
+        return type != null ? type.name() : null;
+    }
+
+    default Commercial.TypePersonnelOhada mapTypePersonnelOhada(String type) {
+        return type != null ? Commercial.TypePersonnelOhada.valueOf(type) : null;
+    }
+
+    default String map(Prospect.TypeProspectOhada type) {
+        return type != null ? type.name() : null;
+    }
+
+    default Prospect.TypeProspectOhada mapTypeProspectOhada(String type) {
+        return type != null ? Prospect.TypeProspectOhada.valueOf(type) : null;
+    }
 }

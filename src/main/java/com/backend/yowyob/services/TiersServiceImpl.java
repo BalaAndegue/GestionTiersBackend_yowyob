@@ -66,6 +66,7 @@ public class TiersServiceImpl implements TiersService {
     @Override
     public ClientDTO createClient(ClientDTO clientDTO) {
         Client client = tiersMapper.toClientEntity(clientDTO);
+        client.setCompteComptable(generateCompteComptable(client));
         Client saved = clientRepository.save(client);
         return tiersMapper.toClientDTO(saved);
     }
@@ -103,6 +104,7 @@ public class TiersServiceImpl implements TiersService {
     @Override
     public FournisseurDTO createFournisseur(FournisseurDTO fournisseurDTO) {
         Fournisseur fournisseur = tiersMapper.toFournisseurEntity(fournisseurDTO);
+        fournisseur.setCompteComptable(generateCompteComptable(fournisseur));
         Fournisseur saved = fournisseurRepository.save(fournisseur);
         return tiersMapper.toFournisseurDTO(saved);
     }
@@ -140,6 +142,7 @@ public class TiersServiceImpl implements TiersService {
     @Override
     public CommercialDTO createCommercial(CommercialDTO commercialDTO) {
         Commercial commercial = tiersMapper.toCommercialEntity(commercialDTO);
+        commercial.setCompteComptable(generateCompteComptable(commercial));
         Commercial saved = commercialRepository.save(commercial);
         return tiersMapper.toCommercialDTO(saved);
     }
@@ -177,6 +180,7 @@ public class TiersServiceImpl implements TiersService {
     @Override
     public ProspectDTO createProspect(ProspectDTO prospectDTO) {
         Prospect prospect = tiersMapper.toProspectEntity(prospectDTO);
+        prospect.setCompteComptable(generateCompteComptable(prospect));
         Prospect saved = prospectRepository.save(prospect);
         return tiersMapper.toProspectDTO(saved);
     }
@@ -257,6 +261,28 @@ public class TiersServiceImpl implements TiersService {
         if (!agencyService.isAgencyOpen(agencyId, java.time.LocalDateTime.now())) {
             throw new RuntimeException("Action non autorisée : L'agence est fermée actuellement.");
         }
+    }
+
+    private String generateCompteComptable(Tiers tier) {
+        String prefix = "";
+        if (tier instanceof Client) {
+            prefix = "411";
+        } else if (tier instanceof Fournisseur) {
+            prefix = "401";
+        } else if (tier instanceof Commercial) {
+            prefix = "421";
+        } else if (tier instanceof Prospect) {
+            prefix = "411";
+        } else {
+            prefix = "471"; // Divers / Attente
+        }
+        
+        // Utilisation du code unique du tiers comme suffixe
+        // Si le code n'est pas encore généré par la logique métier, on pourrait utiliser une partie de l'UUID ou un timestamp
+        // Mais ici 'code' semble être présent dans le DTO et mappé par MapStruct
+        String suffix = tier.getCode() != null ? tier.getCode() : UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+        
+        return prefix + suffix;
     }
     
     // Récupérer seulement les tiers actifs
