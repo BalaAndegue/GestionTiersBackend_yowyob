@@ -456,4 +456,26 @@ public class TiersServiceImpl implements TiersService {
             .map(tiersMapper::toProspectDTO)
             .collect(Collectors.toList());
     }
+    @Override
+    public ClientDTO updateClientSalesChannels(UUID id, Boolean venteDetail, Boolean venteDemiGros, Boolean venteGros, Boolean venteSuperGros) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client not found"));
+        
+        if (venteDetail != null) client.setVenteDetail(venteDetail);
+        if (venteDemiGros != null) client.setVenteDemiGros(venteDemiGros);
+        if (venteGros != null) client.setVenteGros(venteGros);
+        if (venteSuperGros != null) client.setVenteSuperGros(venteSuperGros);
+        
+        return tiersMapper.toClientDTO(clientRepository.save(client));
+    }
+
+    @Override
+    public ClientDTO updateClientTvaStatus(UUID id, Boolean estAssujettiTVA) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client not found"));
+        
+        if (estAssujettiTVA != null) client.setEstAssujettiTVA(estAssujettiTVA);
+        
+        return tiersMapper.toClientDTO(clientRepository.save(client));
+    }
 }
