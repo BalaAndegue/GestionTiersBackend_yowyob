@@ -53,10 +53,10 @@ public class TiersBaseDTO {
     @Schema(description = "Ville", example = "Douala")
     private String city;
     
-    @Schema(description = "Pays", example = "Cameroun")
+    @Schema(description = "Pays", example = "CMR")
     private String pays;
     
-    @Schema(description = "Secteur d'activité", example = "Informatique")
+    @Schema(description = "Secteur d'activité", example = "IT")
     private String secteurActivite;
     
     @Schema(description = "Taille de l'entreprise", example = "PME")
