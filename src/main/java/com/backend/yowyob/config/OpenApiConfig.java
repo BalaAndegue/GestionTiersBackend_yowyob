@@ -15,13 +15,23 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
+
+        //serveur de devellopement
         Server devServer = new Server();
         devServer.setUrl("http://localhost:8080");
         devServer.setDescription("Serveur de développement");
 
+        // Serveur production
+        Server prodServer = new Server();
+        prodServer.setUrl("https://gestiontiersbackend-yowyob.onrender.com");
+        prodServer.setDescription("Serveur de production");
+
+
+
         Contact contact = new Contact();
         contact.setName("Support Yowyob");
         contact.setEmail("support@yowyob.com");
+        contact.setUrl("https://frontend-gestion-tiers-yowyob.vercel.app");
 
         Info info = new Info()
                 .title("Yowyob Tiers API")
@@ -32,6 +42,6 @@ public class OpenApiConfig {
 
         return new OpenAPI()
                 .info(info)
-                .servers(List.of(devServer));
+                .servers(List.of(devServer,prodServer));
     }
 }
