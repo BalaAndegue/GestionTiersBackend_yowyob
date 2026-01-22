@@ -14,6 +14,9 @@ public class TiersBaseDTO {
     @Schema(description = "Compte comptable OHADA (Généré automatiquement)", example = "411XYZ123", accessMode = Schema.AccessMode.READ_ONLY)
     private String compteComptable;
 
+    @Schema(description = "Code unique du tiers (Généré si absent)", example = "T0123456")
+    private String code;
+
     @Schema(description = "Nom ou Raison sociale", requiredMode = Schema.RequiredMode.REQUIRED, example = "Entreprise XYZ")
     private String name;
     

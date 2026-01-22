@@ -20,10 +20,16 @@ public interface TiersMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "code", ignore = true)
+    @Mapping(target = "tenant", ignore = true)
+    @Mapping(target = "agency", ignore = true)
     Client toClientEntity(ClientDTO dto);
     
     ClientDTO toClientDTO(Client client);
     
+    @Mapping(target = "code", ignore = true)
+    @Mapping(target = "tenant", ignore = true)
+    @Mapping(target = "agency", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateClientFromDTO(ClientDTO dto, @MappingTarget Client client);
     
@@ -31,10 +37,16 @@ public interface TiersMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "code", ignore = true)
+    @Mapping(target = "tenant", ignore = true)
+    @Mapping(target = "agency", ignore = true)
     Fournisseur toFournisseurEntity(FournisseurDTO dto);
     
     FournisseurDTO toFournisseurDTO(Fournisseur fournisseur);
     
+    @Mapping(target = "code", ignore = true)
+    @Mapping(target = "tenant", ignore = true)
+    @Mapping(target = "agency", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFournisseurFromDTO(FournisseurDTO dto, @MappingTarget Fournisseur fournisseur);
     
@@ -42,10 +54,16 @@ public interface TiersMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "code", ignore = true)
+    @Mapping(target = "tenant", ignore = true)
+    @Mapping(target = "agency", ignore = true)
     Commercial toCommercialEntity(CommercialDTO dto);
     
     CommercialDTO toCommercialDTO(Commercial commercial);
     
+    @Mapping(target = "code", ignore = true)
+    @Mapping(target = "tenant", ignore = true)
+    @Mapping(target = "agency", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateCommercialFromDTO(CommercialDTO dto, @MappingTarget Commercial commercial);
     
@@ -53,10 +71,16 @@ public interface TiersMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "code", ignore = true)
+    @Mapping(target = "tenant", ignore = true)
+    @Mapping(target = "agency", ignore = true)
     Prospect toProspectEntity(ProspectDTO dto);
     
     ProspectDTO toProspectDTO(Prospect prospect);
     
+    @Mapping(target = "code", ignore = true)
+    @Mapping(target = "tenant", ignore = true)
+    @Mapping(target = "agency", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateProspectFromDTO(ProspectDTO dto, @MappingTarget Prospect prospect);
     

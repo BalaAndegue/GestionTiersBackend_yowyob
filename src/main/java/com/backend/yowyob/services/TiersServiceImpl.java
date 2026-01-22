@@ -30,6 +30,7 @@ public class TiersServiceImpl implements TiersService {
     private final TiersMapper tiersMapper;
     private final AgencyService agencyService;
     private final AgencyRepository agencyRepository;
+    private final TenantRepository tenantRepository;
     
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
@@ -66,6 +67,7 @@ public class TiersServiceImpl implements TiersService {
     @Override
     public ClientDTO createClient(ClientDTO clientDTO) {
         Client client = tiersMapper.toClientEntity(clientDTO);
+        setupMandatoryFields(client, clientDTO);
         client.setCompteComptable(generateCompteComptable(client));
         Client saved = clientRepository.save(client);
         return tiersMapper.toClientDTO(saved);
@@ -76,12 +78,11 @@ public class TiersServiceImpl implements TiersService {
         Client existing = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client non trouvé avec l'id: " + id));
         
-        // Recréer l'entité au lieu de mettre à jour
-        Client updatedClient = tiersMapper.toClientEntity(clientDTO);
-        updatedClient.setId(existing.getId());
-        updatedClient.setCreatedAt(existing.getCreatedAt());
+        tiersMapper.updateClientFromDTO(clientDTO, existing);
+        setupMandatoryFields(existing, clientDTO);
+        existing.setUpdatedAt(java.time.LocalDateTime.now());
         
-        Client saved = clientRepository.save(updatedClient);
+        Client saved = clientRepository.save(existing);
         return tiersMapper.toClientDTO(saved);
     }
     
@@ -104,6 +105,7 @@ public class TiersServiceImpl implements TiersService {
     @Override
     public FournisseurDTO createFournisseur(FournisseurDTO fournisseurDTO) {
         Fournisseur fournisseur = tiersMapper.toFournisseurEntity(fournisseurDTO);
+        setupMandatoryFields(fournisseur, fournisseurDTO);
         fournisseur.setCompteComptable(generateCompteComptable(fournisseur));
         Fournisseur saved = fournisseurRepository.save(fournisseur);
         return tiersMapper.toFournisseurDTO(saved);
@@ -114,12 +116,11 @@ public class TiersServiceImpl implements TiersService {
         Fournisseur existing = fournisseurRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fournisseur non trouvé avec l'id: " + id));
         
-        // Recréer l'entité au lieu de mettre à jour
-        Fournisseur updatedFournisseur = tiersMapper.toFournisseurEntity(fournisseurDTO);
-        updatedFournisseur.setId(existing.getId());
-        updatedFournisseur.setCreatedAt(existing.getCreatedAt());
+        tiersMapper.updateFournisseurFromDTO(fournisseurDTO, existing);
+        setupMandatoryFields(existing, fournisseurDTO);
+        existing.setUpdatedAt(java.time.LocalDateTime.now());
         
-        Fournisseur saved = fournisseurRepository.save(updatedFournisseur);
+        Fournisseur saved = fournisseurRepository.save(existing);
         return tiersMapper.toFournisseurDTO(saved);
     }
     
@@ -142,6 +143,7 @@ public class TiersServiceImpl implements TiersService {
     @Override
     public CommercialDTO createCommercial(CommercialDTO commercialDTO) {
         Commercial commercial = tiersMapper.toCommercialEntity(commercialDTO);
+        setupMandatoryFields(commercial, commercialDTO);
         commercial.setCompteComptable(generateCompteComptable(commercial));
         Commercial saved = commercialRepository.save(commercial);
         return tiersMapper.toCommercialDTO(saved);
@@ -152,12 +154,11 @@ public class TiersServiceImpl implements TiersService {
         Commercial existing = commercialRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Commercial non trouvé avec l'id: " + id));
         
-        // Recréer l'entité au lieu de mettre à jour
-        Commercial updatedCommercial = tiersMapper.toCommercialEntity(commercialDTO);
-        updatedCommercial.setId(existing.getId());
-        updatedCommercial.setCreatedAt(existing.getCreatedAt());
+        tiersMapper.updateCommercialFromDTO(commercialDTO, existing);
+        setupMandatoryFields(existing, commercialDTO);
+        existing.setUpdatedAt(java.time.LocalDateTime.now());
         
-        Commercial saved = commercialRepository.save(updatedCommercial);
+        Commercial saved = commercialRepository.save(existing);
         return tiersMapper.toCommercialDTO(saved);
     }
     
@@ -180,6 +181,7 @@ public class TiersServiceImpl implements TiersService {
     @Override
     public ProspectDTO createProspect(ProspectDTO prospectDTO) {
         Prospect prospect = tiersMapper.toProspectEntity(prospectDTO);
+        setupMandatoryFields(prospect, prospectDTO);
         prospect.setCompteComptable(generateCompteComptable(prospect));
         Prospect saved = prospectRepository.save(prospect);
         return tiersMapper.toProspectDTO(saved);
@@ -190,12 +192,11 @@ public class TiersServiceImpl implements TiersService {
         Prospect existing = prospectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Prospect non trouvé avec l'id: " + id));
         
-        // Recréer l'entité au lieu de mettre à jour
-        Prospect updatedProspect = tiersMapper.toProspectEntity(prospectDTO);
-        updatedProspect.setId(existing.getId());
-        updatedProspect.setCreatedAt(existing.getCreatedAt());
+        tiersMapper.updateProspectFromDTO(prospectDTO, existing);
+        setupMandatoryFields(existing, prospectDTO);
+        existing.setUpdatedAt(java.time.LocalDateTime.now());
         
-        Prospect saved = prospectRepository.save(updatedProspect);
+        Prospect saved = prospectRepository.save(existing);
         return tiersMapper.toProspectDTO(saved);
     }
     
@@ -211,6 +212,44 @@ public class TiersServiceImpl implements TiersService {
         Prospect prospect = prospectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Prospect non trouvé avec l'id: " + id));
         return tiersMapper.toProspectDTO(prospect);
+    }
+
+    private void setupMandatoryFields(Tiers tier, TiersBaseDTO dto) {
+        // Handle Code
+        if (dto.getCode() != null && !dto.getCode().trim().isEmpty()) {
+            tier.setCode(dto.getCode());
+        } else if (tier.getCode() == null) {
+            tier.setCode(generateUniqueCode(tier));
+        }
+
+        // Handle Tenant
+        if (dto.getTenantId() != null) {
+            tier.setTenant(tenantRepository.findById(dto.getTenantId())
+                .orElseThrow(() -> new RuntimeException("Tenant non trouvé avec l'id: " + dto.getTenantId())));
+        } else if (tier.getTenant() == null) {
+            // Optionnel: Récupérer un tenant par défaut ou lancer une erreur
+            // Pour l'instant on prend le premier s'il existe (à affiner selon la logique métier)
+            tier.setTenant(tenantRepository.findAll().stream().findFirst()
+                .orElseThrow(() -> new RuntimeException("Aucun tenant disponible pour l'affectation par défaut")));
+        }
+
+        // Handle Agency
+        if (dto.getAgencyId() != null) {
+            tier.setAgency(agencyRepository.findById(dto.getAgencyId())
+                .orElseThrow(() -> new RuntimeException("Agence non trouvée avec l'id: " + dto.getAgencyId())));
+        }
+    }
+
+    private String generateUniqueCode(Tiers tier) {
+        String prefix = "T";
+        if (tier instanceof Client) prefix = "C";
+        else if (tier instanceof Fournisseur) prefix = "F";
+        else if (tier instanceof Commercial) prefix = "COM";
+        else if (tier instanceof Prospect) prefix = "P";
+        
+        String timestamp = String.valueOf(System.currentTimeMillis()).substring(7);
+        String random = UUID.randomUUID().toString().substring(0, 4).toUpperCase();
+        return prefix + "-" + timestamp + random;
     }
 
 
