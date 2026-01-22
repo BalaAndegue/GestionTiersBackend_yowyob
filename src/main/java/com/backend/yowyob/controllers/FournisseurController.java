@@ -110,4 +110,23 @@ public class FournisseurController {
     public ResponseEntity<List<FournisseurDTO>> getInactiveFournisseurs() {
         return ResponseEntity.ok(tiersService.findInactiveFournisseurs());
     }
+
+    @Operation(summary = "Mettre à jour les informations financières", description = "Met à jour le mode de paiement et le délai de livraison")
+    @PutMapping("/{id}/financial-info")
+    public ResponseEntity<FournisseurDTO> updateFinancialInfo(
+            @PathVariable UUID id,
+            @RequestParam(required = false) com.backend.yowyob.entity.Fournisseur.ModePaiement modePaiement,
+            @RequestParam(required = false) String delaiLivraison) {
+        return ResponseEntity.ok(tiersService.updateFournisseurFinancialInfo(id, modePaiement, delaiLivraison));
+    }
+
+    @Operation(summary = "Mettre à jour les informations métier", description = "Met à jour le type OHADA, les produits principaux et la certification")
+    @PutMapping("/{id}/business-info")
+    public ResponseEntity<FournisseurDTO> updateBusinessInfo(
+            @PathVariable UUID id,
+            @RequestParam(required = false) com.backend.yowyob.entity.Fournisseur.TypeFournisseurOhada typeFournisseurOhada,
+            @RequestParam(required = false) com.backend.yowyob.entity.Fournisseur.ProduitPrincipal produitsPrincipaux,
+            @RequestParam(required = false) String certification) {
+        return ResponseEntity.ok(tiersService.updateFournisseurBusinessInfo(id, typeFournisseurOhada, produitsPrincipaux, certification));
+    }
 }

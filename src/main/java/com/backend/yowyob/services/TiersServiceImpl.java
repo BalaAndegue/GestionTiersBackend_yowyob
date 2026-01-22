@@ -478,4 +478,75 @@ public class TiersServiceImpl implements TiersService {
         
         return tiersMapper.toClientDTO(clientRepository.save(client));
     }
+
+    @Override
+    public FournisseurDTO updateFournisseurFinancialInfo(UUID id, Fournisseur.ModePaiement modePaiement, String delaiLivraison) {
+        Fournisseur fournisseur = fournisseurRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Fournisseur not found"));
+        
+        if (modePaiement != null) fournisseur.setModePaiement(modePaiement);
+        if (delaiLivraison != null) fournisseur.setDelaiLivraison(delaiLivraison);
+        
+        return tiersMapper.toFournisseurDTO(fournisseurRepository.save(fournisseur));
+    }
+
+    @Override
+    public FournisseurDTO updateFournisseurBusinessInfo(UUID id, Fournisseur.TypeFournisseurOhada typeFournisseurOhada, Fournisseur.ProduitPrincipal produitsPrincipaux, String certification) {
+        Fournisseur fournisseur = fournisseurRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Fournisseur not found"));
+        
+        if (typeFournisseurOhada != null) fournisseur.setTypeFournisseurOhada(typeFournisseurOhada);
+        if (produitsPrincipaux != null) fournisseur.setProduitsPrincipaux(produitsPrincipaux);
+        if (certification != null) fournisseur.setCertification(certification);
+        
+        return tiersMapper.toFournisseurDTO(fournisseurRepository.save(fournisseur));
+    }
+
+    @Override
+    public CommercialDTO updateCommercialContract(UUID id, java.time.LocalDate dateDebutContrat, java.time.LocalDate dateFinContrat, java.math.BigDecimal commission, Commercial.TypeCommercial typeCommercial) {
+        Commercial commercial = commercialRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Commercial not found"));
+        
+        if (dateDebutContrat != null) commercial.setDateDebutContrat(dateDebutContrat);
+        if (dateFinContrat != null) commercial.setDateFinContrat(dateFinContrat);
+        if (commission != null) commercial.setCommission(commission);
+        if (typeCommercial != null) commercial.setTypeCommercial(typeCommercial);
+        
+        return tiersMapper.toCommercialDTO(commercialRepository.save(commercial));
+    }
+
+    @Override
+    public CommercialDTO updateCommercialPortfolio(UUID id, Commercial.ZoneCouverture zonesCouvertes, Commercial.Specialisation specialisations) {
+        Commercial commercial = commercialRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Commercial not found"));
+        
+        if (zonesCouvertes != null) commercial.setZonesCouvertes(zonesCouvertes);
+        if (specialisations != null) commercial.setSpecialisations(specialisations);
+        
+        return tiersMapper.toCommercialDTO(commercialRepository.save(commercial));
+    }
+
+    @Override
+    public ProspectDTO updateProspectQualification(UUID id, Prospect.Potentiel potentiel, Integer probabilite, Prospect.SourceProspect sourceProspect, String notesProspect) {
+        Prospect prospect = prospectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Prospect not found"));
+        
+        if (potentiel != null) prospect.setPotentiel(potentiel);
+        if (probabilite != null) prospect.setProbabilite(probabilite);
+        if (sourceProspect != null) prospect.setSourceProspect(sourceProspect);
+        if (notesProspect != null) prospect.setNotesProspect(notesProspect);
+        
+        return tiersMapper.toProspectDTO(prospectRepository.save(prospect));
+    }
+
+    @Override
+    public ProspectDTO updateProspectConversion(UUID id, java.time.LocalDate dateConversion, Prospect.TypeProspectOhada typeProspectOhada) {
+        Prospect prospect = prospectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Prospect not found"));
+        
+        if (dateConversion != null) prospect.setDateConversion(dateConversion);
+        if (typeProspectOhada != null) prospect.setTypeProspectOhada(typeProspectOhada);
+        
+        return tiersMapper.toProspectDTO(prospectRepository.save(prospect));
+    }
 }

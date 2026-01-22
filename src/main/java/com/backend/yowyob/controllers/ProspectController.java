@@ -110,4 +110,24 @@ public class ProspectController {
     public ResponseEntity<List<ProspectDTO>> getInactiveProspects() {
         return ResponseEntity.ok(tiersService.findInactiveProspects());
     }
+
+    @Operation(summary = "Mettre à jour la qualification", description = "Met à jour le potentiel, la probabilité, la source et les notes")
+    @PutMapping("/{id}/qualification")
+    public ResponseEntity<ProspectDTO> updateQualification(
+            @PathVariable UUID id,
+            @RequestParam(required = false) com.backend.yowyob.entity.Prospect.Potentiel potentiel,
+            @RequestParam(required = false) Integer probabilite,
+            @RequestParam(required = false) com.backend.yowyob.entity.Prospect.SourceProspect sourceProspect,
+            @RequestParam(required = false) String notesProspect) {
+        return ResponseEntity.ok(tiersService.updateProspectQualification(id, potentiel, probabilite, sourceProspect, notesProspect));
+    }
+
+    @Operation(summary = "Mettre à jour la conversion", description = "Met à jour la date de conversion et le type OHADA")
+    @PutMapping("/{id}/conversion")
+    public ResponseEntity<ProspectDTO> updateConversion(
+            @PathVariable UUID id,
+            @RequestParam(required = false) java.time.LocalDate dateConversion,
+            @RequestParam(required = false) com.backend.yowyob.entity.Prospect.TypeProspectOhada typeProspectOhada) {
+        return ResponseEntity.ok(tiersService.updateProspectConversion(id, dateConversion, typeProspectOhada));
+    }
 }

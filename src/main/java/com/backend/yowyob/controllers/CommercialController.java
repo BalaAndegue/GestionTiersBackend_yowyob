@@ -113,4 +113,24 @@ public class CommercialController {
     public ResponseEntity<List<CommercialDTO>> getInactiveCommerciaux() {
         return ResponseEntity.ok(tiersService.findInactiveCommerciaux());
     }
+
+    @Operation(summary = "Mettre à jour le contrat", description = "Met à jour les dates de contrat, la commission et le type de commercial")
+    @PutMapping("/{id}/contract")
+    public ResponseEntity<CommercialDTO> updateContract(
+            @PathVariable UUID id,
+            @RequestParam(required = false) java.time.LocalDate dateDebutContrat,
+            @RequestParam(required = false) java.time.LocalDate dateFinContrat,
+            @RequestParam(required = false) java.math.BigDecimal commission,
+            @RequestParam(required = false) com.backend.yowyob.entity.Commercial.TypeCommercial typeCommercial) {
+        return ResponseEntity.ok(tiersService.updateCommercialContract(id, dateDebutContrat, dateFinContrat, commission, typeCommercial));
+    }
+
+    @Operation(summary = "Mettre à jour le portefeuille", description = "Met à jour les zones couvertes et la spécialisation")
+    @PutMapping("/{id}/portfolio")
+    public ResponseEntity<CommercialDTO> updatePortfolio(
+            @PathVariable UUID id,
+            @RequestParam(required = false) com.backend.yowyob.entity.Commercial.ZoneCouverture zonesCouvertes,
+            @RequestParam(required = false) com.backend.yowyob.entity.Commercial.Specialisation specialisations) {
+        return ResponseEntity.ok(tiersService.updateCommercialPortfolio(id, zonesCouvertes, specialisations));
+    }
 }

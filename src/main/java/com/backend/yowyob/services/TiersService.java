@@ -82,4 +82,16 @@ public interface TiersService {
     ClientDTO updateClientSalesChannels(UUID id, Boolean venteDetail, Boolean venteDemiGros, Boolean venteGros, Boolean venteSuperGros);
     ClientDTO updateClientTvaStatus(UUID id, Boolean estAssujettiTVA);
 
+    // Fournisseur specific settings
+    FournisseurDTO updateFournisseurFinancialInfo(UUID id, Fournisseur.ModePaiement modePaiement, String delaiLivraison);
+    FournisseurDTO updateFournisseurBusinessInfo(UUID id, Fournisseur.TypeFournisseurOhada typeFournisseurOhada, Fournisseur.ProduitPrincipal produitsPrincipaux, String certification);
+
+    // Commercial specific settings
+    CommercialDTO updateCommercialContract(UUID id, java.time.LocalDate dateDebutContrat, java.time.LocalDate dateFinContrat, java.math.BigDecimal commission, Commercial.TypeCommercial typeCommercial);
+    CommercialDTO updateCommercialPortfolio(UUID id, Commercial.ZoneCouverture zonesCouvertes, Commercial.Specialisation specialisations);
+
+    // Prospect specific settings
+    ProspectDTO updateProspectQualification(UUID id, Prospect.Potentiel potentiel, Integer probabilite, Prospect.SourceProspect sourceProspect, String notesProspect);
+    ProspectDTO updateProspectConversion(UUID id, java.time.LocalDate dateConversion, Prospect.TypeProspectOhada typeProspectOhada);
+
 }
