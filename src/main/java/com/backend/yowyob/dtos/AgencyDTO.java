@@ -1,5 +1,6 @@
 package com.backend.yowyob.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -45,7 +46,10 @@ public class AgencyDTO {
     private Boolean isPublic;
     private Boolean isBusiness;
     private Integer totalAffiliatedCustomers;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
     
     // Nested Opening Hours

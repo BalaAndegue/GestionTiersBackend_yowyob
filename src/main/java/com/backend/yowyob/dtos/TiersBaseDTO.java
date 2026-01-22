@@ -1,6 +1,7 @@
 package com.backend.yowyob.dtos;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
@@ -63,6 +64,7 @@ public class TiersBaseDTO {
     private String tailleEntreprise;
     
     @Schema(description = "Date de création de l'entreprise", example = "2020-01-01")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateCreation;
     
     @Schema(description = "Numéro du registre de commerce", example = "RC/DLA/2020/B/123")
